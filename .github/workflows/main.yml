@@ -1,0 +1,28 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code ko checkout karo
+        uses: actions/checkout@v4
+
+      - name: .NET setup karo
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Dependencies restore karo
+        run: dotnet restore
+
+      - name: Project build karo
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Tests run karo
+        run: dotnet test --no-build --configuration Release
