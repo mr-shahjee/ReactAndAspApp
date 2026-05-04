@@ -9,7 +9,7 @@ namespace ReactAndAspApp.Server.Controllers
     [Route("api/[controller]")]
     public class CustomersController : ControllerBase
     {
-        // test ci/cd pipeline
+        // test ci/cd pipeline edited
         private readonly ICustomerService _service;
         public CustomersController(ICustomerService service) => _service = service;
 
