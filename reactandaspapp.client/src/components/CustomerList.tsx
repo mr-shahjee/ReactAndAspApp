@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+//import React, { useEffect, useState } from 'react';
 import type { Customer, CustomerType } from '../api';
 import CustomerForm from './CustomerForm';
 
