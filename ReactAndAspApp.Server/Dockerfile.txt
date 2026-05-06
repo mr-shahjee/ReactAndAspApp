@@ -1,23 +1,21 @@
-# Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Install Node.js
+# Node install
 RUN apt-get update && apt-get install -y curl \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# Copy everything
 COPY . .
 
-# React build + .NET build
+# React build
 RUN npm install --prefix reactandaspapp.client
 RUN npm run build --prefix reactandaspapp.client
 
+# .NET build (FIXED)
 RUN dotnet restore
-RUN dotnet publish ReactAndAspApp.Server.csproj -c Release -o out
+RUN dotnet publish $(find . -name "*.csproj" | head -n 1) -c Release -o out
 
-# Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 
