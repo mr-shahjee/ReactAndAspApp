@@ -1,4 +1,5 @@
 //import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Table, Button, Modal} from 'react-bootstrap';
 import type { Customer, CustomerType } from '../api';
 import CustomerForm from './CustomerForm';
@@ -80,7 +81,7 @@ export default function CustomerPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {customers.map(c => (
+                    {customers.map((c: Customer) => (
                         <tr key={c.id}>
                             <td>{c.name}</td>
                             <td>{c.customerType?.name ?? c.customerTypeId}</td>
