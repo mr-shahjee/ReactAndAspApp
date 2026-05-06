@@ -1,24 +1,26 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Node install
 RUN apt-get update && apt-get install -y curl \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
 COPY . .
 
-# React build
 RUN npm install --prefix reactandaspapp.client
 RUN npm run build --prefix reactandaspapp.client
 
-# .NET build (FIXED)
 RUN dotnet restore
-RUN dotnet publish $(find . -name "*.csproj" | head -n 1) -c Release -o out
+
+# IMPORTANT: force known output folder
+RUN dotnet publish $(find . -name "*.csproj" | head -n 1) -c Release -o /app/out
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 
 COPY --from=build /app/out .
+
+# DEBUG: verify DLL exists
+RUN ls -R
 
 ENTRYPOINT ["dotnet", "ReactAndAspApp.Server.dll"]
