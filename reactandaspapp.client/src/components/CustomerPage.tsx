@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form } from 'react-bootstrap';
+//import React, { useEffect, useState } from 'react';
+import { Table, Button, Modal} from 'react-bootstrap';
 import type { Customer, CustomerType } from '../api';
 import CustomerForm from './CustomerForm';
-import CustomerTypeSelect from './CustomerTypeSelect';
+//import CustomerTypeSelect from './CustomerTypeSelect';
 
 export default function CustomerPage() {
     const [customers, setCustomers] = useState<Customer[]>([]);
@@ -91,7 +91,11 @@ export default function CustomerPage() {
                             <td>{c.lastUpdated ? new Date(c.lastUpdated).toLocaleString() : ''}</td>
                             <td>
                                 <Button size="sm" variant="warning" onClick={() => { setEditing(c); setShowModal(true); }}>Edit</Button>{' '}
-                                <Button size="sm" variant="danger" onClick={() => handleDelete(c.id)}>Delete</Button>
+                                <Button size="sm" variant="danger" onClick={() => {
+    if (c.id !== undefined) {
+        handleDelete(c.id);
+    }
+}}>Delete</Button>
                             </td>
                         </tr>
                     ))}
@@ -106,7 +110,7 @@ export default function CustomerPage() {
                     <CustomerForm
                         types={types}
                         initial={editing}
-                        onSaved={handleSave}
+                        onSaved={(form: Customer) => handleSave(form)}
                         onCancel={() => { setShowModal(false); setEditing(null); }}
                     />
                 </Modal.Body>
