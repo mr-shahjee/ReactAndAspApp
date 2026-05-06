@@ -111,7 +111,11 @@ export default function CustomerPage() {
                     <CustomerForm
                         types={types}
                         initial={editing}
-                        onSaved={(form: Customer) => handleSave(form)}
+                        onSaved={() => {
+    if (editing) {
+        handleSave(editing);
+    }
+}}
                         onCancel={() => { setShowModal(false); setEditing(null); }}
                     />
                 </Modal.Body>
