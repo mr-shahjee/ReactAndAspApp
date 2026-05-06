@@ -13,7 +13,7 @@ RUN npm run build --prefix reactandaspapp.client
 RUN dotnet restore
 
 # IMPORTANT: force known output folder
-RUN dotnet publish ReactAndAspApp/ReactAndAspApp.Server/ReactAndAspApp.Server.csproj -c Release -o /app/out
+RUN dotnet publish ReactAndAspApp.Server/ReactAndAspApp.Server.csproj -c Release -o /app/out
 
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
