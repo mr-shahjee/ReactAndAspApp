@@ -7,6 +7,10 @@ RUN apt-get update && apt-get install -y curl \
 
 COPY . .
 
+ENV ASPNETCORE_URLS=http://0.0.0.0:8080
+
+EXPOSE 8080
+
 RUN npm install --prefix reactandaspapp.client
 RUN npm run build --prefix reactandaspapp.client
 
@@ -23,5 +27,5 @@ COPY --from=build /app/out .
 
 # DEBUG: verify DLL exists
 RUN ls -R
-
+ 
 ENTRYPOINT ["dotnet", "ReactAndAspApp.Server.dll"]
